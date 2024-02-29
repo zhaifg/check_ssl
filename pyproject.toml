@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "check-ssl"
+version = "0.1.0"
+description = ""
+authors = ["JenGuo Zhai <zhaifengguo@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/zhai"
+packages = [{ include = "check_ssl" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyopenssl = "^24.0.0"
+idna = "^3.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
