@@ -4,13 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["JenGuo Zhai <zhaifengguo@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/zhai"
+homepage = "https://github.com/zhaifg/check_ssl"
+repository = "https://github.com/zhaifg/check_ssl"
 packages = [{ include = "check_ssl" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 pyopenssl = "^24.0.0"
 idna = "^3.6"
+
+
+[tool.poetry.scripts]
+check_ssl = "check_ssl.check:main"
 
 
 [build-system]
