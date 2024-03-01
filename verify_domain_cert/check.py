@@ -17,14 +17,6 @@ from OpenSSL import SSL
 HostInfo = namedtuple(field_names="cert hostname peername", typename="HostInfo")
 
 
-def valid(host):
-    try:
-        idna.encode(host)
-        return True
-    except idna.IDNAError:
-        return False
-
-
 def verify_cert(cert, hostname):
     # verify notAfter/notBefore, CA trusted, servername/sni/hostname
     cert.has_expired()
@@ -91,12 +83,10 @@ def print_basic_info(hostinfo):
         commonname=get_common_name(hostinfo.cert),
         SAN=get_alt_names(hostinfo.cert),
         issuer=get_issuer(hostinfo.cert),
-        notbefore=hostinfo.cert.not_valid_before,
-        notafter=hostinfo.cert.not_valid_after,
+        notbefore=hostinfo.cert.not_valid_before_utc,
+        notafter=hostinfo.cert.not_valid_after_utc,
     )
-
-
-#    print(s)
+    print(s)
 
 
 def check_it_out(hostname, port):
@@ -106,16 +96,19 @@ def check_it_out(hostname, port):
 
 def main():
     parser = argparse.ArgumentParser(description="get certificate  expire date")
-    parser.add_argument("hosts")
+    # parser.add_argument("hosts")
+    parser.add_argument("hosts", metavar="N", type=str, nargs="+", help="hosts")
 
-    args = parser.parse_args()
-
+    args = parser.parse_args()  
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for hostname in args.hosts:
             hostname = hostname.strip()
-            if valid(hostname) is False:
-                print(f"{hostname} is not a valid hostname")
+
             h = urlparse(hostname)
-            hostname = h.netloc
-            (hostname, port) = hostname.split(":")
+            h_list = h.netloc.split(":")
+            (hostname, port) = (h_list[0], int(h_list[1]) if len(h_list) > 1 else 443)
             executor.submit(check_it_out, hostname, port)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,19 +1,19 @@
 ## install 
 ```bash
-pip install check_ssl
+pip install verify_domain_cert
 
 ```
 
 ## usage
 
 ```bash
-check_ssl https://www.google.com https://www.baidu.com
+verify_domain_cert https://www.google.com https://www.baidu.com
 
 ```
 
 ```python
 
-from check_ssl.check import get_certificate
+from verify_domain_cert.check import get_certificate
 
 get_certificate("https://www.google.com")
 

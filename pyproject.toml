@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "check-ssl"
-version = "0.1.0"
-description = ""
+name = "verify_domain_cert"
+version = "0.1.3"
+description = "Verify if a domain certificate has expired"
 authors = ["JenGuo Zhai <zhaifengguo@gmail.com>"]
 readme = "README.md"
 homepage = "https://github.com/zhaifg/check_ssl"
 repository = "https://github.com/zhaifg/check_ssl"
-packages = [{ include = "check_ssl" }]
+packages = [{ include = "verify_domain_cert" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -15,7 +15,7 @@ idna = "^3.6"
 
 
 [tool.poetry.scripts]
-check_ssl = "check_ssl.check:main"
+verify_domain_cert = "verify_domain_cert.check:main"
 
 
 [build-system]
