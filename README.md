@@ -1,8 +1,11 @@
+
+
 ## install 
 ```bash
 pip install verify_domain_cert
 
 ```
+**Prerequisite:** Python 3.11+
 
 ## usage
 
