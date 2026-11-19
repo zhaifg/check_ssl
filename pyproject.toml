@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "verify_domain_cert"
-version = "0.1.3"
+version = "0.2.0"
 description = "Verify if a domain certificate has expired"
 authors = ["JenGuo Zhai <zhaifengguo@gmail.com>"]
 readme = "README.md"

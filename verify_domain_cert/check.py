@@ -97,9 +97,39 @@ def check_it_out(hostname, port):
 def main():
     parser = argparse.ArgumentParser(description="get certificate  expire date")
     # parser.add_argument("hosts")
-    parser.add_argument("hosts", metavar="N", type=str, nargs="+", help="hosts")
+    parser.add_argument("hosts", metavar="N", type=str, nargs="*", help="hosts")
+    parser.add_argument(
+        "--install-skill",
+        action="store_true",
+        help="write the verify_domain_cert Agent Skill (SKILL.md) into an agent skills directory and exit",
+    )
+    parser.add_argument(
+        "--skill-dir",
+        default=None,
+        help="skill directory used by --install-skill (default: ~/.agents/skills/verify-domain-cert)",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="overwrite an existing SKILL.md when used with --install-skill",
+    )
 
-    args = parser.parse_args()  
+    args = parser.parse_args()
+
+    if args.install_skill:
+        from verify_domain_cert.skill import install_skill
+
+        try:
+            skill_file = install_skill(args.skill_dir, force=args.force)
+        except (FileExistsError, NotADirectoryError) as exc:
+            parser.exit(1, f"error: {exc}\n")
+            return
+        print(f"installed agent skill: {skill_file}")
+        return
+
+    if not args.hosts:
+        parser.error("provide at least one host or use --install-skill")
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for hostname in args.hosts:
             hostname = hostname.strip()
